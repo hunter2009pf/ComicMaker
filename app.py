@@ -4,6 +4,7 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 from custom_widgets.main_window import MainWindow
+from custom_widgets.test_window import TestWindow
 
 
 # You need one (and only one) QApplication instance per application.
@@ -12,7 +13,8 @@ from custom_widgets.main_window import MainWindow
 app = QApplication(sys.argv)
 
 # Create a Qt widget, which will be our window.
-window = MainWindow()
+# window = MainWindow()
+window = TestWindow()
 window.show()  # IMPORTANT!!!!! Windows are hidden by default.
 
 # Start the event loop.
