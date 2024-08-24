@@ -17,6 +17,8 @@ from PySide6.QtWidgets import (
     QSlider,
     QSpinBox,
     QTimeEdit,
+    QToolBar,
+    QMenu,
     QVBoxLayout,
     QHBoxLayout,
     QGridLayout,
@@ -25,6 +27,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import QAction, QPalette, QColor
 
 from constants.fixed_strs import MainWindowConfig
+from custom_widgets.project_window import ProjectWindow
 
 
 class Color(QWidget):
@@ -37,6 +40,7 @@ class Color(QWidget):
         palette.setColor(QPalette.Window, QColor(color))
         self.setPalette(palette)
 
+
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -47,6 +51,10 @@ class MainWindow(QMainWindow):
         # set up the default size of the main window
         self.resize(MainWindowConfig.WIDTH, MainWindowConfig.HEIGHT)
 
+        self.button = QPushButton("Create New Project")
+        self.button.clicked.connect(self.show_new_window)
+        self.setCentralWidget(self.button)
+
         # label = QLabel("你好，世界！")
         # font = label.font()
         # font.setPointSize(30)
@@ -55,7 +63,6 @@ class MainWindow(QMainWindow):
         #     Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter
         # )
 
-        
         # layout1 = QHBoxLayout()
         # layout2 = QVBoxLayout()
         # layout3 = QVBoxLayout()
@@ -76,17 +83,25 @@ class MainWindow(QMainWindow):
 
         # layout1.addLayout( layout3 )
 
-        layout = QGridLayout()
+        # layout = QGridLayout()
 
-        layout.addWidget(Color('red'), 0, 0)
-        layout.addWidget(Color('green'), 1, 0)
-        layout.addWidget(Color('blue'), 1, 1)
-        layout.addWidget(Color('purple'), 2, 1)
+        # layout.addWidget(Color("red"), 0, 0)
+        # layout.addWidget(Color("green"), 1, 0)
+        # layout.addWidget(Color("blue"), 1, 1)
+        # layout.addWidget(Color("purple"), 2, 1)
 
-        widget = QWidget()
-        widget.setLayout(layout)
+        # widget = QWidget()
+        # widget.setLayout(layout)
 
-        self.setCentralWidget(widget)
+        # self.setCentralWidget(widget)
+
+        # toolbar = QToolBar("My main toolbar")
+        # self.addToolBar(toolbar)
+
+        # button_action = QAction("Your button", self)
+        # button_action.setStatusTip("This is your button")
+        # button_action.triggered.connect(self.onMyToolBarButtonClick)
+        # toolbar.addAction(button_action)
 
         # self.button = QPushButton("Press Me!")
         # self.button.setCheckable(True)
@@ -107,7 +122,7 @@ class MainWindow(QMainWindow):
         # container = QWidget()
         # container.setLayout(layout)
         # self.setCentralWidget(container)
-    
+
     def button_clicked(self):
         print("Button clicked")
         self.button.setText("You already clicked me!")
@@ -117,9 +132,17 @@ class MainWindow(QMainWindow):
     def button_toggled(self, checked):
         print("Button toggled:", checked)
 
-    def contextMenuEvent(self, e):
-        context = QMenu(self)
-        context.addAction(QAction("test 1", self))
-        context.addAction(QAction("test 2", self))
-        context.addAction(QAction("test 3", self))
-        context.exec(e.globalPos())
+    # def contextMenuEvent(self, e):
+    #     context = QMenu(self)
+    #     context.addAction(QAction("test 1", self))
+    #     context.addAction(QAction("test 2", self))
+    #     context.addAction(QAction("test 3", self))
+    #     context.exec(e.globalPos())
+
+    def onMyToolBarButtonClick(self, s):
+        print("click", s)
+
+    def show_new_window(self, checked):
+        self.w = ProjectWindow()
+        self.w.show()
+        self.hide()
